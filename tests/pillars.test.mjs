@@ -1,5 +1,5 @@
-const assert = require("node:assert/strict");
-const pillars = require("../src/data/pillars.json");
+import assert from "node:assert/strict";
+import pillars from "../src/data/pillars.json" with { type: "json" };
 
 assert.deepEqual(
   pillars.map(({ title }) => title),
