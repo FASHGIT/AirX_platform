@@ -20,3 +20,4 @@ for (const pillar of pillars) {
 }
 
 process.stdout.write("AirX pillar checks passed (2 checks).\n");
+

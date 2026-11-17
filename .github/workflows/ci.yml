@@ -2,9 +2,9 @@ name: Foundation checks
 
 on:
   push:
-    branches: [main]
+    branches: [main, preview-deployment]
   pull_request:
-    branches: [main]
+    branches: [main, preview-deployment]
 
 jobs:
   checks:
@@ -23,3 +23,4 @@ jobs:
       - run: pnpm test
       - run: pnpm typecheck
       - run: pnpm build
+

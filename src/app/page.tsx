@@ -1,4 +1,5 @@
 import pillars from "@/data/pillars.json";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -8,7 +9,11 @@ export default function Home() {
           <span className="brand-mark">A</span>
           <span>AirX<span className="brand-light"> Platform</span></span>
         </a>
-        <span className="environment"><i /> Foundation preview</span>
+        <div className="top-actions">
+          <span className="environment"><i /> Foundation preview</span>
+          <Link className="text-link" href="/login">Workspace sign in</Link>
+          <Link className="button button-primary" href="/register">Create account</Link>
+        </div>
       </nav>
 
       <section className="hero" id="top">
@@ -38,7 +43,8 @@ export default function Home() {
         </div>
       </section>
 
-      <footer><span>AirX Platform</span><span>Foundation stage · No live vending or payments</span></footer>
+      <footer className="landing-footer"><span>AirX Platform</span><span>Foundation stage · No live vending or payments</span></footer>
     </main>
   );
 }
+

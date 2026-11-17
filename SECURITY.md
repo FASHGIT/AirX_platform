@@ -1,14 +1,21 @@
-# Security policy
+# Security notes
 
-Report security issues privately to the repository maintainers. Do not include credentials or customer data in issues.
+## Secrets and deployments
 
-## Current boundaries
+- `.env*` files are ignored except `.env.example`. Never commit credentials, tokens, production URLs with sensitive parameters, or Supabase service-role keys.
+- Server and browser clients use only the Supabase publishable/anon key. No service-role client exists in this foundation.
+- Configure separate, non-production Supabase credentials for Vercel Preview before testing authenticated flows. Production deployment and production database changes are not authorized by this work.
+- Invitation tokens are random, single-use, time-limited, stored as SHA-256 hashes, and returned once in a URL fragment. Share invite URLs out of band until a verified email service is approved.
 
-- The foundation page is static and makes no transaction requests.
-- `.env*` files are ignored except `.env.example`.
-- Only public Supabase URL and publishable/anon key placeholders are documented for browser use.
-- Service-role keys must stay in protected server-side secret storage and must never be exposed to a browser.
-- All tables exposed through Supabase APIs require row-level security and least-privilege grants.
-- Tenant authorization must derive from authenticated membership data, not user-editable profile metadata.
+## Tenant authorization
 
-The connected Supabase project was checked on 2026-11-17. All 15 public tables have RLS enabled. Anonymous table privileges have been revoked; authenticated has SELECT on all 15 tables and INSERT/UPDATE only on listings, with RLS still enforcing row access. `service_role` remains privileged and must stay server-side. The helper `public.is_org_member(uuid)` remains executable by authenticated users because RLS policies use it; the Supabase advisor flags its `SECURITY DEFINER` status for further review. Its original schema definition is not included here.
+- Browser access uses the signed-in user's Supabase session and RLS.
+- Sensitive writes use narrowly scoped `SECURITY DEFINER` RPCs with empty `search_path`, explicit identity/role checks and audit events.
+- Organisation membership policies are rebound to private-schema helper functions. Listing creation and modification require owner/admin/operator membership.
+- Platform administrator memberships must be provisioned through a controlled operator process; there is no self-service platform-admin assignment.
+- The Phase 1 migration is staged, not applied or integration-tested against a local Supabase database. Apply first only to a designated non-production database, then verify grants and cross-tenant denial tests before any production migration.
+
+## Not production-ready
+
+No live airtime vending or payment processing is enabled. There is no provider credential integration, financial transaction workflow, settlement/reconciliation implementation, production monitoring, or completed compliance review. Do not turn on live transactions until provider integrations, independent security review, operational controls and required approvals are complete.
+
