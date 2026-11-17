@@ -1,23 +1,4 @@
-const pillars = [
-  {
-    number: "01",
-    title: "Airtime Stock Exchange",
-    text: "A marketplace foundation for discovering and coordinating airtime inventory between approved participants.",
-    label: "Market foundation",
-  },
-  {
-    number: "02",
-    title: "Shared API and Vending Infrastructure",
-    text: "A shared integration layer designed for authenticated, auditable provider connections when approved integrations are ready.",
-    label: "Integration foundation",
-  },
-  {
-    number: "03",
-    title: "Personalised Dealer Digital Channels",
-    text: "A foundation for dealer storefronts and digital experiences that can reflect each organisation’s brand and needs.",
-    label: "Dealer channels",
-  },
-];
+import pillars from "@/data/pillars.json";
 
 export default function Home() {
   return (

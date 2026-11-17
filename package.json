@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "test": "node tests/pillars.test.cjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
