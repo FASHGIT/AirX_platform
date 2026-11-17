@@ -35,9 +35,9 @@ pnpm build
 
 ## Supabase security
 
-The connected Supabase project contains organisation, membership, dealer, buyer, listing, API-client, order, ledger, settlement, reconciliation, webhook, audit and dispute tables. Row-level security is enabled on all 15 listed public tables. The only existing broad authenticated read is the active listing marketplace policy; review the exposed listing columns before adding sensitive fields. Database access must remain server-authorized and organisation-scoped.
+The connected Supabase project contains organisation, membership, dealer, buyer, listing, API-client, order, ledger, settlement, reconciliation, webhook, audit and dispute tables. Row-level security is enabled on all 15 public tables. Authenticated users have table-level SELECT on those tables and INSERT/UPDATE on listings only; row access remains controlled by RLS, including the active-listing marketplace policy. Anonymous table grants have been removed. The privileged `service_role` grants are unchanged. Review listing columns before adding sensitive fields and keep database access organisation-scoped.
 
-This repository contains a small follow-up migration that revokes anonymous execution of `public.is_org_member(uuid)` while preserving authenticated execution needed by membership policies. Apply local migrations only after reviewing the target project and migration history. The original foundation schema migration is in the connected project but its full SQL package was not recoverable from chat; do not replay an invented replacement over that project.
+This repository contains follow-up migrations for the connected project: they restrict direct RPC access to `public.is_org_member(uuid)` and align browser-role table grants with the existing RLS policies. The full initial schema migration is not in this repository. These follow-up migrations are not a complete clean-install schema; review the target project and migration history before replaying them elsewhere.
 
 ## Before enabling product flows
 
